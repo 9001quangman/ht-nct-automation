@@ -65,6 +65,6 @@ These projects were created to:
 
 ## 📩 Contact
 Lê Quang Mẫn – lequangman9001@gmail.com  
-[LinkedIn](https://...) • [CV PDF](https://...) • [GitHub Profile](https://github.com/...)
+
 
 
