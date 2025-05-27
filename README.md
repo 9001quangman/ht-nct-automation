@@ -1,4 +1,4 @@
-Dear Hiring Team at Coder Trove,
+Dear Hiring Team,
 
 I'm writing to express my interest in the QA Tester position recently posted. With over 5 years of experience in manual testing across web, mobile, and OTT platforms — combined with my continuous learning in automation — I believe I’m well-aligned with the requirements of your team.
 
