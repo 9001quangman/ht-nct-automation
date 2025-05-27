@@ -61,4 +61,4 @@ A Cypress end-to-end test simulating address input and verification:
 These projects were created to:
 - Demonstrate real-world automation capability
 - Reflect my QA mindset, from problem analysis to test design
-- Complement my CV in applying for roles like QA Engineer at Coder Trove
+- Complement my CV in applying for roles like QA Engineer
