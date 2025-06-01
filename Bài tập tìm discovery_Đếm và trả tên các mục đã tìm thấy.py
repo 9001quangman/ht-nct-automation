@@ -5,25 +5,25 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Cấu hình Appium
+# Appium configuration
 options = UiAutomator2Options()
 options.platform_name = "Android"
 options.device_name = "R58W41PDE1M"
 options.app_package = "ht.nct"
 options.app_activity = "ht.nct.ui.activity.splash.SplashActivity"
 options.automation_name = "UiAutomator2"
-options.no_reset = True  # Giữ trạng thái ứng dụng giữa các lần chạy
+options.no_reset = True  # Keep app state between sessions
 
 driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
 wait = WebDriverWait(driver, 5)
 
-# Lưu danh sách playlist
+# Store playlist list
 playlist_positions = {}
 found_playlists = set()
 not_found_playlists = set()
 
 def swipe(direction="left"):
-    """Vuốt theo hướng chỉ định trong GridView."""
+    """Swipe in the specified direction inside the GridView."""
     grid_view = driver.find_element(By.ID, "ht.nct:id/recycler_view")
     grid_location = grid_view.location
     grid_size = grid_view.size
@@ -36,15 +36,15 @@ def swipe(direction="left"):
     print(f"✅ Swiped {direction} on GridView!")
 
 def get_visible_playlists():
-    """Trả về danh sách playlist đang hiển thị trên màn hình."""
+    """Return a dictionary of visible playlists on the screen."""
     return {el.text.strip(): el for el in driver.find_elements(By.XPATH, "//*[@resource-id='ht.nct:id/name']") if el.text.strip()}
 
 def collect_playlist_positions():
-    """Thu thập danh sách playlist bằng cách vuốt qua toàn bộ GridView."""
+    """Collect all playlist names and their swipe positions across the GridView."""
     global playlist_positions
     seen_items = {}
     swipe_count = 0
-    max_swipe = 6  # Giới hạn số lần vuốt
+    max_swipe = 6  # Limit number of swipes
 
     while swipe_count < max_swipe:
         visible_playlists = get_visible_playlists()
@@ -52,31 +52,30 @@ def collect_playlist_positions():
 
         for name, element in visible_playlists.items():
             if name not in seen_items:
-                seen_items[name] = swipe_count  # Ghi lại swipe index chính xác
+                seen_items[name] = swipe_count  # Save the swipe index
             else:
-                # Nếu một playlist xuất hiện ở swipe index khác, cập nhật lại vị trí đúng
+                # If the playlist appears at a better swipe index, update it
                 prev_index = seen_items[name]
                 if swipe_count < prev_index:
                     seen_items[name] = swipe_count
 
-        if not visible_playlists:  # Nếu không tìm thấy item mới, dừng lại
+        if not visible_playlists:  # No new items found, stop swiping
             break
         
         swipe("left")
         time.sleep(1)
         swipe_count += 1
 
-    # Lưu lại danh sách chính xác
     playlist_positions = seen_items
     print(f"🔍 Final collected playlists: {playlist_positions}")
 
 def go_to_playlist(playlist_name):
-    """Tìm và mở playlist dựa trên vị trí đã lưu."""
+    """Navigate to a specific playlist using its stored swipe position."""
     if playlist_name in playlist_positions:
         target_swipe_count = playlist_positions[playlist_name]
         print(f"🔄 Moving to {playlist_name} at swipe index {target_swipe_count}")
 
-        # Kiểm tra danh sách hiện tại trước khi vuốt
+        # Check if playlist is already visible
         visible_playlists = get_visible_playlists()
         if playlist_name in visible_playlists:
             print(f"✅ Found {playlist_name}, clicking...")
@@ -84,7 +83,7 @@ def go_to_playlist(playlist_name):
             found_playlists.add(playlist_name)
             return True
 
-        # Nếu playlist cần tìm ở đầu danh sách, vuốt phải thay vì vuốt trái
+        # If it's at the beginning, swipe right instead
         current_swipe = 0
         if target_swipe_count == 0:
             while current_swipe < 3:
@@ -98,12 +97,12 @@ def go_to_playlist(playlist_name):
                     return True
                 current_swipe += 1
 
-        # Vuốt sang trái nếu cần
+        # Swipe left the required number of times
         for _ in range(target_swipe_count):
             swipe("left")
             time.sleep(1)
 
-        # Kiểm tra lại sau khi vuốt
+        # Check again after swiping
         visible_playlists = get_visible_playlists()
         if playlist_name in visible_playlists:
             print(f"✅ Found {playlist_name}, clicking...")
@@ -122,26 +121,26 @@ def go_to_playlist(playlist_name):
 try:
     print("✅ Successfully connected to Appium!")
 
-    # Click vào 'tvHome'
+    # Click on 'tvHome'
     tv_home = wait.until(EC.element_to_be_clickable((By.ID, "ht.nct:id/tvHome")))
     tv_home.click()
     print("✅ Clicked on 'tvHome' successfully!")
 
-    # Chờ GridView xuất hiện
+    # Wait for GridView to appear
     wait.until(EC.presence_of_element_located((By.ID, "ht.nct:id/recycler_view")))
     print("✅ GridView found!")
 
-    # Thu thập vị trí playlist
+    # Collect playlist positions
     collect_playlist_positions()
     
     print(f"🔍 Total playlists found: {len(playlist_positions)}")
     for idx, (name, pos) in enumerate(playlist_positions.items()):
         print(f"{idx}. {name} - Swipe index: {pos}")
 
-    # Kiểm tra danh sách đang hiển thị
+    # Check visible playlists
     visible_playlists = get_visible_playlists()
 
-    # Mở các playlist có sẵn trên màn hình
+    # Open playlists currently visible on screen
     for playlist in visible_playlists.keys():
         print(f"🎯 Checking playlist: {playlist}")
         visible_playlists[playlist].click()
@@ -157,7 +156,7 @@ try:
         driver.back()
         time.sleep(2)
 
-    # Vuốt để tìm các playlist còn lại
+    # Swipe to find the rest of the playlists
     for playlist in playlist_positions.keys():
         if playlist not in found_playlists:
             print(f"🎯 Searching for playlist: {playlist}")
