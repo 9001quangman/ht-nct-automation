@@ -1,21 +1,19 @@
 Dear Hiring Team,
 
-I'm writing to express my interest in the QA Tester position recently posted. With over 5 years of experience in manual testing across web, mobile, and OTT platforms — combined with my continuous learning in automation — I believe I’m well-aligned with the requirements of your team.
+I’m writing to express my interest in the QA Tester position. With over 5 years of experience in manual testing across web, mobile, and OTT platforms—combined with my ongoing transition into automation—I believe I’m well-aligned with the requirements of your team.
 
-In my current role at NCT NhacCuaTui, I’ve designed and executed 500+ test cases for our music app, covering areas like livestream, download, and in-app purchase. My contributions have helped detect critical issues pre-release, including logic vulnerabilities and data loss scenarios. Beyond manual testing, I’ve proactively started integrating automation into my workflow. Notably, I built an Appium-based test script to dynamically validate playlist navigation in our Android app — from swiping across the UI to verifying playlist titles using `WebDriverWait` and XPath strategies.
+In my current role at NCT NhacCuaTui, I’ve designed and executed 500+ test cases covering livestream, download, and in-app purchase flows. These efforts helped identify critical issues pre-release, including logic vulnerabilities and data loss scenarios.
 
-I’ve also developed a small Cypress demo using Google Maps API to simulate real-world address validation — both projects are available on my GitHub. These efforts reflect not only my technical adaptability, but also my drive to improve testing efficiency in complex front-end systems.
+Beyond manual testing, I’ve proactively started integrating automation into my workflow. Notably, I developed a Selenium WebDriver-based test script using Appium (Python) to validate dynamic playlist navigation in our Android app—handling gestures, XPath validation, and UI synchronization with WebDriverWait.
 
-I’m excited about the opportunity to work closely with the QA/Delivery Manager and contribute to a mix of FinTech and eCommerce projects. I value structured testing, clear communication, and learning from a collaborative team — all of which align well with Coder Trove’s environment.
+This hands-on project reflects my technical adaptability and strong motivation to become a full-stack automation tester. I value structured testing, clear communication, and continuous learning—qualities I believe match well with Coder Trove’s engineering culture.
 
-Thank you for considering my application. I’d be happy to discuss how I can contribute to your QA efforts.
+Thank you for considering my application. I’d be happy to further discuss how I can contribute to your QA efforts.
 
-Best regards,  
-**Lê Quang Mẫn**  
-📧 lequangman9001@gmail.com  
-📞 0937.017.121  
-
-# QA Automation Demo – NCT Playlist Testing & Address Validation (Cypress + Appium)
+Best regards,
+Lê Quang Mẫn
+📧 lequangman9001@gmail.com
+📞 0937.017.121
 
 This repository showcases two hands-on QA automation demos inspired by real-world projects:
 
